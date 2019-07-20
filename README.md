@@ -1,2 +1,3 @@
 # JackOS
- Jack OS/standard library as per Elements of Computing Systems
+
+Jack OS/standard library as per Elements of Computing Systems
