@@ -1,0 +1,5 @@
+/** Handles text output to the screen */
+
+class Output {
+    
+}

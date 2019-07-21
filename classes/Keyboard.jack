@@ -1,0 +1,5 @@
+/** Handles user input from the keyboard */
+
+class Keyboard {
+    
+}

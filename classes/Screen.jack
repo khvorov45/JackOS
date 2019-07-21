@@ -1,0 +1,5 @@
+/** Handles graphics output to the screen */
+
+class Screen {
+    
+}

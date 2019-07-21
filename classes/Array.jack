@@ -1,0 +1,5 @@
+/** Implements the Array type and array-related operations */
+
+class Array {
+    
+}
