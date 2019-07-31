@@ -2,4 +2,28 @@
 
 class Memory {
     
+    function void init() {
+
+    }
+
+    /** Retursn the value of the main memory at this address */
+    function int peek(int address) {
+
+    }
+
+    /** Sets teh contents of the main memory at this address to value */
+    function void poke(int address, int value) {
+
+    }
+
+    /** finds the allocates from the heap a memory block of the specified size
+    and returns a reference to its base address */
+    function Array alloc(int size) {
+
+    }
+
+    /** Deallocates the given object and frees its memory space */
+    function void deAlloc(Array o) {
+
+    }
 }

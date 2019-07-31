@@ -2,4 +2,22 @@
 
 class Sys {
 
+    function void init() {
+
+    }
+
+    /** Halts the program execution */
+    function void halt() {
+
+    }
+
+    /** Prints the error code on the screen and halts */
+    function void error(int errorCode) {
+
+    }
+
+    /** Waits approximately duration milliseconds and returns */
+    function void wait(int duration) {
+
+    }
 }

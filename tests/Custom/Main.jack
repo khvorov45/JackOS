@@ -1,0 +1,12 @@
+class Main {
+
+    function void main() {
+        var Array r; // stores the test results;
+        
+        let r = 8000; // Base address of the test result vector
+    
+        let r[0] = 56 / 2;                 
+        
+        return;
+    }
+}
