@@ -24,8 +24,7 @@ class Math {
         let twoToThe[12] = 4096;
         let twoToThe[13] = 8192;
         let twoToThe[14] = 16384;
-        let twoToThe[15] = -32767;
-		let twoToThe[15] = twoToThe[15] - 1;
+        let twoToThe[15] = ~32767;
 
         return;
     }
@@ -48,31 +47,67 @@ class Math {
 
     /** Returns the product of x and y */
     function int multiply(int x, int y) {
+
         var int sum, shiftedX, nbit;
+
         let nbit = 0;
         let sum = 0;
         let shiftedX = x;
-        while (nbit < 15) {
+
+        while (nbit < 16) {
             if (Math.bit(y, nbit)) {
                 let sum = sum + shiftedX;
             }
             let shiftedX = shiftedX + shiftedX;
             let nbit = nbit + 1;
         }
+
         return sum;
     }
 
-    /** Returns the integer part of x/y */
+    /** Returns the integer part of x/y. */
     function int divide(int x, int y) {
+
+        var int result;
+        var boolean negate_result, pos_y, pos_x;
+
+        let pos_y = true;
+        let pos_x = true;
+
+        if (y < 0) {
+            let pos_y = false;
+            let y = -y;
+        }
+
+        if (x < 0) {
+            let pos_x = false;
+            let x = -x;
+        }
+
+        let result = Math.divide_abs(x, y);
+
+        if (pos_x & pos_y) {
+            return result;
+        }
+
+        if ((~pos_x) & (~pos_y)) {
+            return result;
+        }
+
+        return -result;
+    }
+
+    /** Returns the integer part of x/y when both are positive */
+    function int divide_abs(int x, int y) {
 
         var int q;
 
-        if (y > x) {
+        if ((y > x) | (y < 0)) { // y < 0 detects overflow
             let qty = 0;
             return 0;
         }
 
-        let q = Math.divide(x, y + y);
+        let q = Math.divide_abs(x, y + y);
 
         if ((x - qty) < y) {
             return q + q;
