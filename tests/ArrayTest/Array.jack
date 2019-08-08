@@ -1,0 +1,14 @@
+/** Implements the Array type and array-related operations */
+
+class Array {
+
+    /** Constructs a new array of the given size */
+    function Array new(int size) {
+
+    }
+
+    /** Disposes this array */
+    method void dispose() {
+
+    }
+}

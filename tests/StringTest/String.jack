@@ -1,0 +1,68 @@
+/** Implements the String type and string-related operations */
+
+class String {
+
+    /** Constructs a new empty string of length 0 that can contain at most
+    maxLength characters
+    */
+    constructor String new(int maxLength) {
+         
+    }
+
+    /** Disposes this string */
+    method void dispose() {
+
+    }
+
+    /** Returns the length of this string */
+    method int length() {
+
+    }
+
+    /** Returns the character at location j of theis string */
+    method void charAt(int j) {
+
+    }
+
+    /** Sets the j-th element of this string to c */
+    method void setCharAt(int j, char c) {
+
+    }
+
+    /** Appends c to this string and returns this string */
+    method String appendChar(char c) {
+
+    }
+
+    /** Erases the last character from this string */
+    method void eraseLastChar() {
+
+    }
+
+    /** Returns the integer value of this string (or the string prefix until
+    a non-digit character is detected)
+    */
+    method int intValue() {
+
+    }
+
+    /** Sets this string to hold a representation of j */
+    method void setInt(int j) {
+
+    }
+
+    /** Returns the backspace character */
+    function char backSpace() {
+
+    }
+
+    /** Returns the double quote (") character */
+    function char doubleQuote() {
+
+    }
+
+    /** Returns the newline character */
+    function char newLine() {
+        
+    }
+}

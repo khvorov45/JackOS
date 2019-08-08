@@ -54,7 +54,7 @@ class Math {
         let sum = 0;
         let shiftedX = x;
 
-        while (nbit < 15) {
+        while (nbit < 16) {
             if (Math.bit(y, nbit)) {
                 let sum = sum + shiftedX;
             }
@@ -65,17 +65,49 @@ class Math {
         return sum;
     }
 
-    /** Returns the integer part of x/y. Both should be positive. */
+    /** Returns the integer part of x/y. */
     function int divide(int x, int y) {
+
+        var int result;
+        var boolean negate_result, pos_y, pos_x;
+
+        let pos_y = true;
+        let pos_x = true;
+
+        if (y < 0) {
+            let pos_y = false;
+            let y = -y;
+        }
+
+        if (x < 0) {
+            let pos_x = false;
+            let x = -x;
+        }
+
+        let result = Math.divide_abs(x, y);
+
+        if (pos_x & pos_y) {
+            return result;
+        }
+
+        if ((~pos_x) & (~pos_y)) {
+            return result;
+        }
+
+        return -result;
+    }
+
+    /** Returns the integer part of x/y when both are positive */
+    function int divide_abs(int x, int y) {
 
         var int q;
 
-        if ((y > x) | (y < 0)) {
+        if ((y > x) | (y < 0)) { // y < 0 detects overflow
             let qty = 0;
             return 0;
         }
 
-        let q = Math.divide(x, y + y);
+        let q = Math.divide_abs(x, y + y);
 
         if ((x - qty) < y) {
             return q + q;
@@ -104,6 +136,24 @@ class Math {
 
     /** Returns the integer part of the square root of x */
     function int sqrt(int x) {
-        return 0;
+
+        var int y, nbit, cur_guess, cur_guess_2;
+
+        let y = 0;
+        let nbit = 7;
+
+        while (nbit > -1) {
+
+            let cur_guess = y + twoToThe[nbit];
+            let cur_guess_2 = Math.multiply(cur_guess, cur_guess);
+
+            // >0 checks for overflow
+            if ((~(cur_guess_2 > x)) & (cur_guess_2 > 0)) {
+                let y = cur_guess;
+            }
+
+            let nbit = nbit - 1;
+        }
+        return y;
     }
 }

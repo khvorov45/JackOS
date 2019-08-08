@@ -136,6 +136,20 @@ class Math {
 
     /** Returns the integer part of the square root of x */
     function int sqrt(int x) {
-        return 0;
+        
+        var int y, nbit, cur_guess, cur_guess_2;
+
+        let y = 0;
+        let nbit = 7;
+
+        while (nbit > -1) {
+            let cur_guess = y + twoToThe[nbit];
+            let cur_guess_2 = Math.multiply(cur_guess, cur_guess);
+            if ((~(cur_guess_2 > x)) & (cur_guess_2 > 0)) {
+                let y = cur_guess;
+            }
+            let nbit = nbit - 1;
+        }
+        return y;
     }
 }
