@@ -4,3 +4,5 @@ __pycache__
 *.bat
 *.sh
 initialise.R
+ECSShortcut.lnk
+VMEmulatorShortcut.lnk
