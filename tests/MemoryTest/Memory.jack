@@ -28,10 +28,11 @@ class Memory {
     and returns a reference to its base address */
     function int alloc(int size) {
 
-        var int curBase, curFreeSize, sizeLeft, fullAllocSize, nextAddress;
-        var int newBase;
+        var int curBase, newBase, sizeLeft, fullAllocSize, nextAddress;
+        var int prevBase;
 
         let curBase = firstFreeBase;
+        let prevBase = firstFreeBase;
 
         while (true) {
 
@@ -44,32 +45,38 @@ class Memory {
                 let fullAllocSize = size + 1;
 
                 // Figure out how much is left
-                let curFreeSize = Memory.peek(curBase - 1);
-                let sizeLeft = curFreeSize - fullAllocSize;
+                let sizeLeft = Memory.peek(curBase - 1) - fullAllocSize;
+
+                // Chack if it's not long enough to be a segment
+                if (sizeLeft < 3) {
+                    let fullAllocSize = fullAllocSize + sizeLeft;
+                }
                 
                 // Change the segment's [-1] value to new size
                 do Memory.poke(curBase - 1, fullAllocSize);
 
-                // Add the size remaining after allocation to the new
-                // list entry
+                // See what the next base is
                 let newBase = curBase + fullAllocSize;
-                do Memory.poke(newBase - 1, sizeLeft);
 
-                // Add the pointer to the next list entry to the new list entry
-                do Memory.poke(newBase, nextAddress);
+                // Add it to the list if it's not there already
+                if (~(newBase = nextAddress)) {
+                    do Memory.poke(newBase - 1, sizeLeft);
+                    do Memory.poke(newBase, nextAddress);
+                }                
 
                 // Make sure the previous segment points to the new segment
                 if (curBase = firstFreeBase) {
                     let firstFreeBase = newBase;
                 }
                 else {
-                    do Sys.error(9000); // temporary
+                    do Memory.poke(prevBase, newBase);
                 }
 
                 return curBase;
             }
 
             // Next list entry
+            let prevBase = curBase;
             let curBase = nextAddress;
 
             // -1 means that there are no more entries in the list
