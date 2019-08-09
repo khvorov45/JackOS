@@ -47,7 +47,7 @@ class Memory {
                 // Figure out how much is left
                 let sizeLeft = Memory.peek(curBase - 1) - fullAllocSize;
 
-                // Chack if it's not long enough to be a segment
+                // Check if it's not long enough to be a segment
                 if (sizeLeft < 3) {
                     let fullAllocSize = fullAllocSize + sizeLeft;
                 }
