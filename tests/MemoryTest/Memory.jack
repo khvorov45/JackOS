@@ -47,7 +47,7 @@ class Memory {
                 // Figure out how much is left
                 let sizeLeft = Memory.peek(curBase - 1) - fullAllocSize;
 
-                // Chack if it's not long enough to be a segment
+                // Check if it's not long enough to be a segment
                 if (sizeLeft < 3) {
                     let fullAllocSize = fullAllocSize + sizeLeft;
                 }
@@ -57,6 +57,11 @@ class Memory {
 
                 // See what the next base is
                 let newBase = curBase + fullAllocSize;
+
+                // Check if it's outside of the heap
+                if (newBase > 16383) {
+                    let newBase = -1;
+                }
 
                 // Add it to the list if it's not there already
                 if (~(newBase = nextAddress)) {

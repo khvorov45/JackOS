@@ -58,6 +58,11 @@ class Memory {
                 // See what the next base is
                 let newBase = curBase + fullAllocSize;
 
+                // Check if it's outside of the heap
+                if (newBase > 16383) {
+                    let newBase = -1;
+                }
+
                 // Add it to the list if it's not there already
                 if (~(newBase = nextAddress)) {
                     do Memory.poke(newBase - 1, sizeLeft);
