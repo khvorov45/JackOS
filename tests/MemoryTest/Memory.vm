@@ -155,6 +155,155 @@ label WHILE_END0
 push constant 1
 neg
 return
-function Memory.deAlloc 0
+function Memory.deAlloc 5
+push argument 0
+push constant 1
+sub
+call Memory.peek 1
+pop local 0
+push argument 0
+push static 1
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 0
+push local 0
+add
+push static 1
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push argument 0
+push constant 1
+sub
+push local 0
+push static 1
+push constant 1
+sub
+call Memory.peek 1
+add
+call Memory.poke 2
+pop temp 0
+push argument 0
+push static 1
+call Memory.peek 1
+call Memory.poke 2
+pop temp 0
+goto IF_END1
+label IF_FALSE1
+push argument 0
+push static 1
+call Memory.poke 2
+pop temp 0
+label IF_END1
+push argument 0
+pop static 1
+push constant 0
+return
+label IF_FALSE0
+push static 1
+pop local 1
+push local 1
+call Memory.peek 1
+pop local 2
+label WHILE_EXP0
+push local 2
+push argument 0
+lt
+not
+if-goto WHILE_END0
+push local 2
+pop local 1
+push local 1
+call Memory.peek 1
+pop local 2
+goto WHILE_EXP0
+label WHILE_END0
+push local 1
+push constant 1
+sub
+call Memory.peek 1
+pop local 3
+push local 1
+push local 3
+add
+push argument 0
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push local 3
+push local 0
+add
+pop local 4
+push local 1
+push constant 1
+sub
+push local 4
+call Memory.poke 2
+pop temp 0
+push local 1
+push local 4
+add
+push local 2
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push local 1
+push constant 1
+sub
+push local 4
+push local 2
+push constant 1
+sub
+call Memory.peek 1
+add
+call Memory.poke 2
+pop temp 0
+push local 1
+push local 2
+call Memory.peek 1
+call Memory.poke 2
+pop temp 0
+label IF_FALSE3
+push constant 0
+return
+label IF_FALSE2
+push local 1
+push argument 0
+call Memory.poke 2
+pop temp 0
+push argument 0
+push local 2
+call Memory.poke 2
+pop temp 0
+push argument 0
+push local 0
+add
+push local 2
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push argument 0
+push constant 1
+sub
+push local 0
+push local 2
+push constant 1
+sub
+call Memory.peek 1
+add
+call Memory.poke 2
+pop temp 0
+push argument 0
+push local 2
+call Memory.peek 1
+call Memory.poke 2
+pop temp 0
+label IF_FALSE4
 push constant 0
 return

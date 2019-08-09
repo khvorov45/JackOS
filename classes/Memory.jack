@@ -95,6 +95,63 @@ class Memory {
 
     /** Deallocates the given object and frees its memory space */
     function void deAlloc(Array o) {
+
+        var int segSize, curBase, nextBase, curSize, newSize;
+
+        let segSize = Memory.peek(o - 1);
+
+        // See if it's before the first segment
+        if (o < firstFreeBase) {
+
+            // See if it's continuous with the first segment
+            if ((o + segSize) = firstFreeBase) {
+                do Memory.poke(
+                    o - 1, segSize + Memory.peek(firstFreeBase - 1)
+                );
+                do Memory.poke(o, Memory.peek(firstFreeBase));
+            }
+            else {
+                do Memory.poke(o, firstFreeBase);
+            }
+
+            let firstFreeBase = o;
+            return;
+        }
+
+        // Find the segment before o
+        let curBase = firstFreeBase;
+        let nextBase = Memory.peek(curBase);
+        while (nextBase < o) {
+            let curBase = nextBase;
+            let nextBase = Memory.peek(curBase);
+        }
+
+        let curSize = Memory.peek(curBase - 1);
+
+        // See if the previous is continuous with o
+        if (curBase + curSize = o) {
+            
+            let newSize = curSize + segSize;
+            do Memory.poke(curBase - 1, newSize);
+
+            // See if the current is continuous with next
+            if ((curBase + newSize) = nextBase) {
+                do Memory.poke(
+                    curBase - 1, newSize + Memory.peek(nextBase - 1)
+                );
+                do Memory.poke(curBase, Memory.peek(nextBase));
+            }
+            return;
+        }
+
+        do Memory.poke(curBase, o);
+        do Memory.poke(o, nextBase);
+
+        // See if o is continuous with next
+        if ((o + segSize) = nextBase) {
+            do Memory.poke(o - 1, segSize + Memory.peek(nextBase - 1));
+            do Memory.poke(o, Memory.peek(nextBase));
+        }
         return;
     }
 }
