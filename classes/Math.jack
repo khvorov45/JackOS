@@ -69,28 +69,28 @@ class Math {
     function int divide(int x, int y) {
 
         var int result;
-        var boolean negate_result, pos_y, pos_x;
+        var boolean negate_result, posY, posX;
 
-        let pos_y = true;
-        let pos_x = true;
+        let posY = true;
+        let posX = true;
 
         if (y < 0) {
-            let pos_y = false;
+            let posY = false;
             let y = -y;
         }
 
         if (x < 0) {
-            let pos_x = false;
+            let posX = false;
             let x = -x;
         }
 
-        let result = Math.divide_abs(x, y);
+        let result = Math.divideAbs(x, y);
 
-        if (pos_x & pos_y) {
+        if (posX & posY) {
             return result;
         }
 
-        if ((~pos_x) & (~pos_y)) {
+        if ((~posX) & (~posY)) {
             return result;
         }
 
@@ -98,7 +98,7 @@ class Math {
     }
 
     /** Returns the integer part of x/y when both are positive */
-    function int divide_abs(int x, int y) {
+    function int divideAbs(int x, int y) {
 
         var int q;
 
@@ -107,7 +107,7 @@ class Math {
             return 0;
         }
 
-        let q = Math.divide_abs(x, y + y);
+        let q = Math.divideAbs(x, y + y);
 
         if ((x - qty) < y) {
             return q + q;
@@ -137,19 +137,19 @@ class Math {
     /** Returns the integer part of the square root of x */
     function int sqrt(int x) {
 
-        var int y, nbit, cur_guess, cur_guess_2;
+        var int y, nbit, curGuess, curGuess2;
 
         let y = 0;
         let nbit = 7;
 
         while (nbit > -1) {
 
-            let cur_guess = y + twoToThe[nbit];
-            let cur_guess_2 = Math.multiply(cur_guess, cur_guess);
+            let curGuess = y + twoToThe[nbit];
+            let curGuess2 = Math.multiply(curGuess, curGuess);
 
             // >0 checks for overflow
-            if ((~(cur_guess_2 > x)) & (cur_guess_2 > 0)) {
-                let y = cur_guess;
+            if ((~(curGuess2 > x)) & (curGuess2 > 0)) {
+                let y = curGuess;
             }
 
             let nbit = nbit - 1;
