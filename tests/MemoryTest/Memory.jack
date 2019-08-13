@@ -105,7 +105,9 @@ class Memory {
 
             // See if it's continuous with the first segment
             if ((o + segSize) = firstFreeBase) {
-                do Memory.poke(o - 1, segSize + Memory.peek(firstFreeBase - 1));
+                do Memory.poke(
+                    o - 1, segSize + Memory.peek(firstFreeBase - 1)
+                );
                 do Memory.poke(o, Memory.peek(firstFreeBase));
             }
             else {
