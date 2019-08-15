@@ -20,7 +20,7 @@ class Output {
 
     /** Prints s starting at the cursor location and advances teh cursor 
     appropriately */
-    function void prontString(String s) {
+    function void printString(String s) {
 
     }
 
