@@ -2,67 +2,91 @@
 
 class String {
 
+    field int thisMaxLength;
+    field Array thisString;
+    field int thisLength;
+
     /** Constructs a new empty string of length 0 that can contain at most
     maxLength characters
     */
     constructor String new(int maxLength) {
-         
+        let thisMaxLength = maxLength;
+        let thisString = Array.new(maxLength);
+        let thisLength = 0;
+        return this;
     }
 
     /** Disposes this string */
     method void dispose() {
-
+        do thisString.dispose();
+        do Memory.deAlloc(this);
+        return;
     }
 
     /** Returns the length of this string */
     method int length() {
-
+        return thisLength;
     }
 
-    /** Returns the character at location j of theis string */
-    method void charAt(int j) {
-
+    /** Returns the character at location j of this string */
+    method char charAt(int j) {
+        return thisString[j];
     }
 
     /** Sets the j-th element of this string to c */
     method void setCharAt(int j, char c) {
-
+        let thisString[j] = c;
+        return;
     }
 
     /** Appends c to this string and returns this string */
     method String appendChar(char c) {
-
+        let thisString[thisLength] = c;
+        let thisLength = thisLength + 1;
+        return this;
     }
 
     /** Erases the last character from this string */
     method void eraseLastChar() {
-
+        var int x;
+        let x = 1;
+        return;
     }
 
     /** Returns the integer value of this string (or the string prefix until
     a non-digit character is detected)
     */
     method int intValue() {
-
+        var int x;
+        let x = 1;
+        return x;
     }
 
     /** Sets this string to hold a representation of j */
     method void setInt(int j) {
-
+        var int x;
+        let x = 1;
+        return;
     }
 
     /** Returns the backspace character */
     function char backSpace() {
-
+        var int x;
+        let x = 1;
+        return x;
     }
 
     /** Returns the double quote (") character */
     function char doubleQuote() {
-
+        var int x;
+        let x = 1;
+        return x;
     }
 
     /** Returns the newline character */
     function char newLine() {
-        
+        var int x;
+        let x = 1;
+        return x;
     }
 }
