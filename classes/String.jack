@@ -90,6 +90,11 @@ class String {
     method void setInt(int j) {
         var int curDigit, nextj;
         var Array strBack;
+        if (j = 0) {
+            let thisLength = 1;
+            let thisString[0] = 48;
+            return;
+        }
         let strBack = Array.new(5);
         let thisLength = 0;
         let curDigit = 0;
