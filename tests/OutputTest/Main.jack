@@ -10,7 +10,10 @@ class Main {
      *  methods of the Output class. */
     function void main() {
         var String s;
-        do Output.drawChar(65);
+        do Output.drawChar(69);
+        do Output.moveCursor(1, 2);
+        do Output.drawChar(69);
+        /*do Output.drawChar(65);
     	let s = String.new(1);
     	do s.appendChar(String.doubleQuote());
     
@@ -35,7 +38,7 @@ class Main {
         
         do Output.printInt(-12345);
         do Output.backSpace();
-        do Output.printInt(6789);
+        do Output.printInt(6789);*/
         
         return;
     }

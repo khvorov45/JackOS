@@ -5,36 +5,18 @@ push constant 0
 pop static 1
 push constant 0
 pop static 2
-push constant 0
-pop static 3
 push constant 16384
-pop static 6
+pop static 5
 call Output.initMap 0
 pop temp 0
 call Output.shiftMap 0
-pop temp 0
-push constant 12345
-push constant 50
-push static 4
-add
-pop pointer 1
-push that 0
-call Memory.poke 2
-pop temp 0
-push constant 12346
-push constant 50
-push static 5
-add
-pop pointer 1
-push that 0
-call Memory.poke 2
 pop temp 0
 push constant 0
 return
 function Output.initMap 0
 push constant 127
 call Array.new 1
-pop static 4
+pop static 3
 push constant 0
 push constant 63
 push constant 63
@@ -1384,7 +1366,7 @@ return
 function Output.shiftMap 4
 push constant 127
 call Array.new 1
-pop static 5
+pop static 4
 push constant 32
 pop local 0
 label WHILE_EXP0
@@ -1394,7 +1376,7 @@ lt
 not
 if-goto WHILE_END0
 push local 0
-push static 4
+push static 3
 add
 pop pointer 1
 push that 0
@@ -1431,7 +1413,7 @@ pop local 1
 goto WHILE_EXP1
 label WHILE_END1
 push local 0
-push static 5
+push static 4
 add
 push local 3
 pop temp 0
@@ -1539,7 +1521,7 @@ pop pointer 1
 push temp 0
 pop that 0
 push argument 0
-push static 4
+push static 3
 add
 push local 0
 pop temp 0
@@ -1563,7 +1545,7 @@ push constant 0
 pop argument 0
 label IF_FALSE0
 push argument 0
-push static 4
+push static 3
 add
 pop pointer 1
 push that 0
@@ -1583,23 +1565,84 @@ push constant 0
 pop argument 0
 label IF_FALSE0
 push argument 0
-push static 5
+push static 4
 add
 pop pointer 1
 push that 0
 return
-function Output.drawChar 0
+function Output.drawChar 3
+push static 1
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 0
+call Output.getShiftedMap 1
+pop local 0
+goto IF_END0
+label IF_FALSE0
+push argument 0
+call Output.getMap 1
+pop local 0
+label IF_END0
+push constant 352
+push static 2
+call Math.multiply 2
+push static 0
+push constant 2
+call Math.divide 2
+add
+pop local 2
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 1
+push constant 11
+lt
+not
+if-goto WHILE_END0
+push constant 12345
+push local 1
+add
+push local 2
+call Memory.poke 2
+pop temp 0
+push local 2
+push static 5
+add
+push local 2
+push static 5
+add
+pop pointer 1
+push that 0
+push local 1
+push local 0
+add
+pop pointer 1
+push that 0
+add
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 2
+push constant 32
+add
+pop local 2
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
 push constant 0
 return
 function Output.moveCursor 0
-push argument 0
-pop static 0
 push argument 1
-pop static 1
-call Output.backSpace 0
-pop temp 0
+pop static 0
+push argument 0
+pop static 2
 push constant 32
-call Output.printChar 1
+call Output.drawChar 1
 pop temp 0
 push constant 0
 return

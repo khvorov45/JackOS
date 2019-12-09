@@ -3,23 +3,19 @@
 class Output {
 
     static int curCol;
+    static bool needShift;
     static int curRow;
-    static int ytopleft;
-    static int xtopleft;
     static Array charMaps;
     static Array shiftedCharMaps;
     static Array screen;
 
     function void init() {
         let curCol = 0;
+        let needShift = false;
         let curRow = 0;
-        let ytopleft = 0;
-        let xtopleft = 0;
         let screen = 16384;
         do Output.initMap();
         do Output.shiftMap();
-        do Memory.poke(12345, charMaps[50]);
-        do Memory.poke(12346, shiftedCharMaps[50]);
         return;
     }
 
@@ -204,16 +200,31 @@ class Output {
 
     /** Draws c at current cursor location */
     function void drawChar(char c) {
+        var Array charMap, nrow;
+        var int scrRegister;
+        if (needShift) {
+            let charMap = Output.getShiftedMap(c);
+        }
+        else {
+            let charMap = Output.getMap(c);
+        }
+        let scrRegister = (352 * curRow) + (curCol / 2);
+        let nrow = 0;
+        while (nrow < 11) {
+            do Memory.poke(12345 + nrow, scrRegister);
+            let screen[scrRegister] = screen[scrRegister] + charMap[nrow];
+            let scrRegister = scrRegister + 32;
+            let nrow = nrow + 1;
+        }
         return;
     }
 
     /** Moves the cursor to the j-th column of the i-th row and erases the
     character displayed there */
     function void moveCursor(int i, int j) {
-        let curCol = i;
-        let curRow = j;
-        do Output.backSpace();
-        do Output.printChar(32);
+        let curCol = j;
+        let curRow = i;
+        do Output.drawChar(32);
         return;
     }
 
@@ -224,7 +235,7 @@ class Output {
         return;
     }
 
-    /** Prints s starting at the cursor location and advances teh cursor 
+    /** Prints s starting at the cursor location and advances the cursor 
     appropriately */
     function void printString(String s) {
         return;
