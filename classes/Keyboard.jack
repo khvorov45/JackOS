@@ -24,7 +24,7 @@ class Keyboard {
                 let charPrevious = charPressed;
             }
         }
-        do Output.printChar(String.backSpace());
+        do Output.printChar(String.backSpace()); // remove cursor
         do Output.printChar(charPrevious);
         return charPrevious; 
     }
