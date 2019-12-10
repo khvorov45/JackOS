@@ -237,7 +237,17 @@ class Output {
     /** Prints c at the cursor location and advances the cursor 
     appripriately */
     function void printChar(char c) {
-                
+        do Memory.poke(12345, c);
+        if (c = String.newLine()) {
+            do Output.println();
+            return;
+        }
+
+        if (c = String.backSpace()) {
+            do Output.backSpace();
+            return;
+        }
+
         do Output.drawChar(c);
 
         // Skip to new line
@@ -301,9 +311,6 @@ class Output {
     /** Moves the cursor one column back */
     function void backSpace() {
 
-        do Memory.poke(12345, curRow);
-        do Memory.poke(12346, curCol);
-
         // Skip to previous line
         if (curCol = 0) {
             if (curRow = 0) {
@@ -323,9 +330,6 @@ class Output {
         let needShift = ~needShift;
 
         do Output.drawChar(32);
-
-        do Memory.poke(12348, curRow);
-        do Memory.poke(12349, curCol);
 
         return;
     }
