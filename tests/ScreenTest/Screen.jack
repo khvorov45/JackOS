@@ -2,39 +2,107 @@
 
 class Screen {
 
-    function void init() {
+    static int screen;
+    static bool black;
+    static Array drawpx, erasepx;
 
+    function void init() {
+        
+        var int i;
+
+        let screen = 16384;
+        let black = true;
+        let drawpx = Array.new(16);
+        let erasepx = Array.new(16);
+
+        let drawpx[0] = 1;
+        let drawpx[15] = ~32767;
+        let i = 1;
+        while (i < 15) {
+            let drawpx[i] = drawpx[i - 1] + drawpx[i - 1];
+            let i = i + 1;
+        }
+
+        let i = 0;
+        while (i < 16) {
+            let erasepx[i] = ~drawpx[i];
+            let i = i + 1;
+        }
+
+        return;
     }
 
-    /** Erases teh entire screen */
+    /** Erases the entire screen */
     function void clearScreen() {
-
+        var int i;
+        let i = 0;
+        while (i < 8192) {
+            let screen[i] = 0;
+            let i = i + 1;
+        }
+        return;
     }
 
     /** Sets a color (white = false, black = true) to be used for all further
     draw* commands */
     function void setColor(boolean b) {
-
+        let black = b;
+        return;
     }
 
     /** Draws the (x, y) pixel */
     function void drawPixel(int x, int y) {
-
+        var int inrow, reg, inreg;
+        let inrow = x / 16;
+        let reg = (y * 32) + inrow;
+        let inreg = x - (inrow * 16);
+        let screen[reg] = screen[reg] & erasepx[inreg];
+        if (black) {
+            let screen[reg] = screen[reg] + drawpx[inreg];
+        }
+        return;
     }
 
     /** Draws a line from pixel (x1, y1) to pixel (x2, y2) */
     function void drawLine(int x1, int y1, int x2, int y2) {
-
+        var int addx, addy, diffx, diffy, adymbdx;
+        let addx = 0;
+        let addy = 0;
+        let diffx = x2 - x1;
+        let diffy = y2 - y1;
+        let adymbdx = 0;
+        while ((Math.abs(addx - diffx) > 0) & (Math.abs(addy - diffy) > 0)) {
+            do Screen.drawPixel(x1 + addx, y1 + addy);
+            if (adymbdx < 0) {
+                if (diffx > 0) {
+                    let addx = addx + 1;
+                }
+                else {
+                    let addx = addx - 1;
+                }
+                let adymbdx = adymbdx + Math.abs(diffy);
+            }
+            else {
+                if (diffy > 0) {
+                    let addy = addy + 1;
+                }
+                else {
+                    let addy = addy - 1;
+                }
+                let adymbdx = adymbdx - Math.abs(diffx);
+            }
+        }
+        return;
     }
 
     /** Draws a filled rectangle whose top left corner is (x1, y1) and whose
     bottom right corner is (x2, y2) */
     function void drawRectangle(int x1, int y1, int x2, int y2) {
-
+        return;
     }
 
     /** Draws a filled circle of radius r <= 181 around (x, y) */
     function void drawCircle(int x, int y, int r) {
-        
+        return;
     }
 }
