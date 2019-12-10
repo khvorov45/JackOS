@@ -211,7 +211,12 @@ class Output {
         let scrRegister = (352 * curRow) + (curCol / 2);
         let nrow = 0;
         while (nrow < 11) {
-            do Memory.poke(12345 + nrow, scrRegister);
+            if (needShift) {
+                let screen[scrRegister] = screen[scrRegister] & 255;
+            }
+            else {
+                let screen[scrRegister] = screen[scrRegister] & -256;
+            }
             let screen[scrRegister] = screen[scrRegister] + charMap[nrow];
             let scrRegister = scrRegister + 32;
             let nrow = nrow + 1;
@@ -224,6 +229,7 @@ class Output {
     function void moveCursor(int i, int j) {
         let curCol = j;
         let curRow = i;
+        let needShift = ~(((j / 2) * 2) = j);
         do Output.drawChar(32);
         return;
     }
@@ -231,29 +237,96 @@ class Output {
     /** Prints c at the cursor location and advances the cursor 
     appripriately */
     function void printChar(char c) {
+                
         do Output.drawChar(c);
+
+        // Skip to new line
+        if ((curCol > 0) & (((curCol / 63) * 63) = curCol)) {
+            if (curRow = 22) {
+                let curRow = 0;
+            }
+            else {
+                let curRow = curRow + 1;
+            }
+            
+            let curCol = 0;
+        }
+
+        // Advance within a line
+        else {
+            let curCol = curCol + 1;
+        }
+
+        let needShift = ~needShift;
+
         return;
     }
 
     /** Prints s starting at the cursor location and advances the cursor 
     appropriately */
     function void printString(String s) {
+        var int strLength, i;
+        let strLength = s.length();
+        let i = 0;
+        while (i < strLength) {
+            do Output.printChar(s.charAt(i));
+            let i = i + 1;
+        }
         return;
     }
 
     /** Prints i starting at the cursor location and advances the cursor 
     appropriately */
     function void printInt(int i) {
+        var String istr;
+        let istr = String.new(6);
+        do istr.setInt(i);
+        do Output.printString(istr);
         return;
     }
 
     /** Advances the cursor at the beginning of the next line */
     function void println() {
+        let curCol = 0;
+        if (curRow = 22) {
+            let curRow = 0;
+        }
+        else {
+            let curRow = curRow + 1;
+        }
+        let needShift = false;
         return;
     }
 
     /** Moves the cursor one column back */
     function void backSpace() {
+
+        do Memory.poke(12345, curRow);
+        do Memory.poke(12346, curCol);
+
+        // Skip to previous line
+        if (curCol = 0) {
+            if (curRow = 0) {
+                let curRow = 22;
+            }
+            else {
+                let curRow = curRow - 1;
+            }
+            let curCol = 63;
+        }
+
+        // Backspace within a line
+        else {
+            let curCol = curCol - 1;
+        }
+
+        let needShift = ~needShift;
+
+        do Output.drawChar(32);
+
+        do Memory.poke(12348, curRow);
+        do Memory.poke(12349, curCol);
+
         return;
     }
 }
